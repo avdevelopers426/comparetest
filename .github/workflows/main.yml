@@ -13,4 +13,4 @@ jobs:
       with:
         server: ftp.plugin999.com
         username: u897918653.abcgit
-        password: ${{ ftp_password.ftp_password }}
+        password: ${{ env.ftp_password }}
