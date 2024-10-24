@@ -14,4 +14,4 @@ jobs:
         server: inverstheme.com
         username: u897918653.plugin999.com
         password: w+9jDRMsr+PY7:lN
-        server-dir: public_html/jd
+        server-dir: ./public_html/jd
