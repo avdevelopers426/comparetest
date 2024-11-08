@@ -69,8 +69,7 @@
 }
 
 .is-empty-cart #tc-container,
-.is-empty-cart #tc-container-mobile,
-.is-empty-cart .prev-next-container {
+.is-empty-cart #tc-container-mobile {
   display: none;
 }
 
@@ -223,15 +222,15 @@ a.custom-link:hover {
   border-bottom: 1px solid #2fb5d2;
 }
 
-//.business-customer,
-//.private-customer {
-//  padding: 0 0 15px;
-//}
+.business-customer,
+.private-customer {
+  padding: 0 0 15px;
+}
 
 // put .private-customer checkbox closer to .business-customer if both are visible
-//.business-customer ~ .private-customer {
-//  margin-top: -15px;
-//}
+.business-customer ~ .private-customer {
+  margin-top: -15px;
+}
 
 #i_am_business[disabled=disabled], #i_am_business[disabled=disabled] ~ label,
 #i_am_private[disabled=disabled], #i_am_private[disabled=disabled] ~ label {
@@ -254,11 +253,6 @@ a.custom-link:hover {
 // ZOneTheme .js-terms a unclickable links fix
 .custom-checkbox input[type=checkbox] {
   width: auto;
-}
-
-.custom-checkbox input[type=checkbox] + span {
-  width: 0.937em;
-  height: 0.937em;
 }
 
 // Fix at_movic theme's required styling on form controls
@@ -387,34 +381,11 @@ div#thecheckout-address-invoice {
   margin: -2px 0 20px;
 }
 
-.notice-msg {
-  text-align: left;
-  font-style: italic;
-  background: #fcffe7;
-  color: green;
-  padding: 10px 5px;
-  margin: -2px 0 20px;
-  &.error-notice {
-    background: #ffeaea;
-    color: #e50000;
-  }
-}
-
-// Do not display notice if error is shown on the same field
-.-error.-notice ~ .notice-msg {
-  display: none;
-}
-
 .error-msg.visible {
   display: block;
 }
 
 .-error ~ .error-msg {
-  display: block;
-  margin-top: 1px;
-}
-
-.-error > .error-msg {
   display: block;
   margin-top: 1px;
 }
@@ -436,18 +407,16 @@ div#thecheckout-address-invoice {
   display: block;
 }
 
-body#checkout span.custom-checkbox,
-body#checkout span.custom-checkbox span {
+span.custom-checkbox {
   position: relative;
-  //flex: unset;
-  margin-top: 0.15rem;
+
 }
 
-body#checkout .custom-checkbox span.label {
-  width: auto;
-  height: auto;
-  border: none;
-  flex-grow: 1;
+@supports (display: flex) {
+  span.custom-checkbox {
+    display: flex;
+    align-items: flex-start;
+  }
 }
 
 #conditions-to-approve span.custom-checkbox,
@@ -500,6 +469,10 @@ span.custom-radio {
 .payment-option .custom-radio {
   margin-right: 28px;
   margin-top: 5px;
+}
+
+.custom-checkbox span.label {
+  text-align: left;
 }
 
 .payment-option-fee.hidden {
@@ -572,70 +545,34 @@ button#confirm_order:disabled {
 .delivery-option > label > .row {
   margin: 0;
   text-align: left;
-  display: flex;
+  display: block;
 }
 
-.delivery-option > label,
-.payment-option > label{
-  margin-bottom: 0;
-  display: flex;
-  align-items: center;
+.delivery-option > label > .row > div > .row > div {
+  padding: 0;
 }
 
-.payment-option, .delivery-option {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.delivery-option-detail {
+.delivery-option-detail > .row {
   display: flex;
-  flex-grow: 1;
   margin: 0;
   position: relative;
 }
 
-.delivery-option-logo img {
-    max-height: 100%;
-    max-width: ~"calc(100% - 10px)"; // because of Less syntax
-    margin-right: 10px;
-}
-
-// Absolute positioned shipping logo (to save space) - replaced on 8.11.2023 with logo on the left
-//.delivery-option .delivery-option-logo img {
-//  max-height: 100%;
-//  max-width: 100%;
-//  margin-left: 10px;
-//}
-
-//.delivery-option-label.has-logo {
-//  .delivery-option-name, .delivery-option-delay {
-//    margin-right: 50px;
-//  }
-//}
-
 .delivery-option-logo {
-  max-width: 70px;
+  position: absolute;
+  right: 10px;
+  width: 50px;
+  height: 50px;
 }
 
-.delivery-option-price {
-  &.free {
-    .carrier-price-with-tax-formatted {
-      display: none;
-    }
-  }
-  &:not(.free) {
-    .carrier-price {
-      display: none;
-    }
-  }
+.delivery-option .delivery-option-logo img {
+  max-height: 100%;
+  max-width: 100%;
+  margin-left: 10px;
 }
 
-.delivery-option-price .carrier-price-without-tax-formatted {
-  display: none;
-}
-
-.delivery-option-detail .name-and-delay {
-  flex-grow: 1;
+.delivery-option-name.has-logo {
+  margin-right: 50px;
 }
 
 .delivery-options .row.delivery-option {
@@ -1150,7 +1087,7 @@ label.required:before {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  //opacity: 0.8;
+  opacity: 0.8;
   display: none;
 }
 
@@ -1175,7 +1112,7 @@ span.social-logo > span {
 .tc-social-login-btn .social-logo {
   position: absolute;
   display: inline-block;
-  //border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
   left: 0;
   padding: 6px 6px 6px 5px;
   top: 1px;
@@ -1213,41 +1150,37 @@ span.social-logo > span {
 }
 
 /* Social style: Light */
-.tc-social-login-btn .google-logo {
+.social-btn-style-light .google-logo {
   .google-logo-official;
 }
 
-.tc-social-login-btn .facebook-logo {
+.social-btn-style-light .facebook-logo {
   .facebook-logo-official;
 }
 
-.tc-social-login-btn #tc-facebook-signin {
+.social-btn-style-light #tc-facebook-signin {
   background-color: white;
 }
 
-#tc-facebook-signin:hover {
-  border-color: #d2e3fc;
-  background-color: #f8faff;
-}
-
-.tc-social-login-btn #tc-google-signin {
-  background-color: white;
-}
-
-.tc-social-login-btn #tc-google-signin:hover {
+.social-btn-style-light #tc-facebook-signin:hover {
   background-color: #eee;
 }
 
-.tc-social-login-btn {
-  color: #3c4043;
-  border: 1px solid #dadce0;
-  padding: 10px 11px 9px 40px;
-  font-size: 12px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
+.social-btn-style-light #tc-google-signin {
+  background-color: white;
 }
 
-.tc-social-login-btn .social-logo {
+.social-btn-style-light #tc-google-signin:hover {
+  background-color: #eee;
+}
+
+.social-btn-style-light .tc-social-login-btn {
+  color: #666;
+  border: 1px solid #ccc;
+  padding: 10px 11px 9px 45px;
+}
+
+.social-btn-style-light .tc-social-login-btn .social-logo {
   padding: 8px 7px 7px 8px
 }
 
@@ -1354,7 +1287,7 @@ span.social-logo > span {
   background: #e9e9e9;
   box-shadow: 0 4px 4px -4px #9b9b9b;
   border-radius: 5px;
-  margin: 0 -4px;
+  margin: -4px;
 }
 
 .popup-body {
@@ -1391,52 +1324,42 @@ span.social-logo > span {
 }
 
 // Fix for braintree popup payment
-//.popup-payment-form .col-md-10, .popup-payment-form .col-xs-12 {
-//  width: 100%;
-//}
-//
-//form#braintree-form {
-//  max-width: 500px;
-//}
-//
-//.popup-payment-button #payment-confirmation .ps-shown-by-js {
-//  text-align: center;
-//}
-
-//[data-braintree-card-form] [data-form-new-card], [data-form-new-card] .bt__form-row {
-//  display: flex;
-//  align-items: baseline;
-//}
-
-//.braintree-card #block-expiration-date, .braintree-card #block-cvv {
-//  flex-basis: 50%;
-//  flex-grow: 0;
-//}
-
-//[data-form-new-card] .bt__form-row {
-//  flex-grow: 0;
-//  flex-basis: 250px;
-//}
-//
-//.braintree-row-payment #block-card-number {
-//  padding-right: 22px;
-//}
-
-.popup-payment-form .bt__form-row {
-  margin: 0;
-  & .text-muted {
-    padding-left: 5px;
-  }
+.popup-payment-form .col-md-10, .popup-payment-form .col-xs-12 {
+  width: 100%;
 }
+
+form#braintree-form {
+  max-width: 500px;
+}
+
+.popup-payment-button #payment-confirmation .ps-shown-by-js {
+  text-align: center;
+}
+
+[data-braintree-card-form] [data-form-new-card], [data-form-new-card] .bt__form-row {
+  display: flex;
+  align-items: baseline;
+}
+
+.braintree-card #block-expiration-date, .braintree-card #block-cvv {
+  flex-basis: 50%;
+  flex-grow: 0;
+}
+
+[data-form-new-card] .bt__form-row {
+  flex-grow: 0;
+  flex-basis: 250px;
+}
+
+.braintree-row-payment #block-card-number {
+  padding-right: 22px;
+}
+
 
 // End of Braintree fixes
 
 .popup-payment-button {
   padding: 30px 10px 10px;
-}
-
-.payment-options .hidden-in-payment-methods {
-  display: none!important;
 }
 
 .cart-item .product-line {
@@ -1652,32 +1575,8 @@ a.edit-customer-info {
   padding: 1px;
 }
 
-body#checkout .condition-label {
-  padding-left: 0;
-  margin-top: 0;
-  & > label {
-    margin-bottom: 0;
-  }
-}
-
 /* Only for Chromium and Firefox; IE11 does not support feature query @supports, so it won't evaluate */
 @supports (display: flex) {
-
-  body#checkout span.custom-checkbox {
-    display: flex;
-    align-items: flex-start;
-    & span {
-      top: 0;
-      margin: 0 5px 0 0;
-    }
-    & > label, & span.label {
-      margin: 0;
-      line-height: 1.25em;
-      text-align: left;
-      padding: 0;
-    }
-  }
-
   .form-fields, .business-fields-container, .private-fields-container {
     display: flex;
     flex-wrap: wrap;
@@ -1686,36 +1585,11 @@ body#checkout .condition-label {
     flex-basis: 100%;
   }
 
-  .form-group, .business-customer, .private-customer, .second-address, .order-options, .terms-and-conditions, .shaim_gdpr_checkbox {
-    //padding-left: 5px;
-    //padding-right: 5px;
+  .form-group {
+    padding-left: 5px;
+    padding-right: 5px;
     flex-grow: 1;
     flex-basis: 100%;
-  }
-
-  .terms-and-conditions {
-    text-align: left;
-  }
-}
-
-body#checkout .condition-label {
-  margin-left: 5px;
-  & label {
-    margin-top: 1px;
-  }
-}
-
-body#checkout div.shaim_heureka_checkbox {
-  margin-left: 26px;
-  text-align: left;
-  & label {
-    margin-top: 1px;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .form-group, .business-customer, .private-customer, .second-address, .order-options, .terms-and-conditions, .shaim_gdpr_checkbox {
-    padding-left: 0;
   }
 }
 
@@ -1779,7 +1653,6 @@ body#checkout div.shaim_heureka_checkbox {
 div#tc-container-mobile {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 /* Reassurance block */
@@ -1828,7 +1701,6 @@ div#tc-container-mobile {
 
 .social-login .tc-social-login-btn {
   max-width: 100%;
-  width: 240px;
 }
 
 /* Column-responsive styles for login-block BEGIN */
@@ -1898,18 +1770,18 @@ body:not(.force-email-overlay) .width-below-35pct .classic-login {
 }
 
 // Fix left-column themes
-#checkout #left-column {
+#module-thecheckout-order #left-column {
   display: none;
 }
 
-#checkout #content-wrapper {
+#module-thecheckout-order #content-wrapper {
   width: 100%;
 }
 
 // Virtual cart support
-body.is-virtual-cart.is-invoice-address-primary #thecheckout-address-delivery,
+body.is-virtual-cart #thecheckout-address-delivery,
 body.is-virtual-cart #thecheckout-shipping,
-body.is-virtual-cart.is-invoice-address-primary .checkout-block .second-address {
+body.is-virtual-cart .checkout-block .second-address {
   display: none !important;
 }
 
@@ -1931,6 +1803,11 @@ body.is-virtual-cart.is-invoice-address-primary .checkout-block .second-address 
 
 .payment-option img {
   max-width: 100%;
+}
+
+.payment-option label {
+  padding-top: 5px;
+  line-height: 1.5em;
 }
 
 .cart-summary-line.cart-total.cart-total-tax-included > span,
@@ -1971,7 +1848,7 @@ body.is-test-mode #is-test-mode-notice {
   border: 1px solid black;
   animation: collapse-smaller .6s forwards;
   animation-delay: 5s;
-  z-index: 1000;
+  z-index: 100;
 }
 
 @keyframes collapse-smaller {
@@ -2021,79 +1898,82 @@ body.is-test-mode #is-test-mode-notice {
 // Test mode notice box END
 
 // Compact cart styling (only desktop view) BEGIN
-body.compact-cart {
-  #tc-container {
-    .product-line-image img {
-      max-width: 100px;
-    }
+body.compact-cart #tc-container .product-line-image img {
+  max-width: 100px;
+}
 
-    .cart-item .product-line {
-      //display: block;
-      min-height: 100px;
-    }
-    .cart-item .product-line-info {
-      width: 100%;
-    }
+body.compact-cart #tc-container .cart-item .product-line {
+  //display: block;
+  min-height: 100px;
+}
 
-    .product-line-info.product-price.h5 {
-      display: none;
-    }
+body.compact-cart #tc-container .cart-item .product-line-info {
+  width: 100%;
+}
 
-    .product-line-actions {
-      align-items: center;
-      padding-top: 5px;
-      margin-top: 5px;
-    }
+//body.compact-cart #tc-container .product-line .product-line-image {
+//  float: left;
+//}
 
-    .product-line-info .label {
-      font-size: 0.8em;
-      line-height: 1em;
-    }
+body.compact-cart #tc-container .product-line-info.product-price.h5 {
+  display: none;
+}
 
-    .product-line-info.product-attribute {
-      font-size: 0.9em;
-    }
+body.compact-cart #tc-container .product-line-actions {
+  align-items: center;
+  padding-top: 5px;
+  //border: 1px solid #f5f5f5;
+  //background: #fafafa;
+  margin-top: 5px;
+}
 
-    .cart-item .product-line-info:first-child {
-      margin-top: 0;
-    }
+body.compact-cart #tc-container .product-line-info .label {
+  font-size: 0.8em;
+  line-height: 1em;
+}
 
-    .product-line-body {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-    }
+body.compact-cart #tc-container .product-line-info.product-attribute {
+  font-size: 0.9em;
+}
 
-    .cart-detailed-totals {
-      width: 100%;
-      left: 0;
-    }
+body.compact-cart #tc-container .cart-item .product-line-info:first-child {
+  margin-top: 0;
+}
 
-    .qty-container .qty-box {
-      transform: scale(0.8);
-    }
+body.compact-cart #tc-container .product-line-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
 
-    .cart-summary-line > span {
-      font-size: 0.85em;
-    }
+body.compact-cart #tc-container .cart-detailed-totals {
+  width: 100%;
+  left: 0;
+}
 
-    .block-promo .promo-code {
-      padding: 10px 5px;
-    }
+body.compact-cart #tc-container .qty-container .qty-box {
+  transform: scale(0.8);
+}
 
-    .product-line-actions .product-line-qty {
-      flex-grow: 5;
-      text-align: right;
-    }
+body.compact-cart #tc-container .cart-summary-line > span {
+  font-size: 0.85em;
+}
 
-    .product-line-actions > div {
-      line-height: 20px;
-    }
+body.compact-cart #tc-container .block-promo .promo-code {
+  padding: 10px 5px;
+}
 
-    .product-line-delete {
-      padding-top: 0;
-    }
-  }
+body.compact-cart #tc-container .product-line-actions .product-line-qty {
+  flex-grow: 5;
+  text-align: right;
+}
+
+body.compact-cart #tc-container .product-line-actions > div {
+  line-height: 20px;
+}
+
+body.compact-cart #tc-container .product-line-delete {
+  padding-top: 0;
 }
 
 // Compact cart styling (only desktop view) END
@@ -2105,7 +1985,7 @@ body.compact-cart {
   color: inherit;
 }
 
-#checkout i.material-icons.check-icon {
+#module-thecheckout-order i.material-icons.check-icon {
   display: none;
 }
 
@@ -2334,7 +2214,7 @@ e.g. Amazon has confirmation button inside of additional info */
 
 /* Some themes do not specify custom radios, let's repeat definition from defaul theme.css */
 .custom-radio {
-  display: flex;
+  display: inline-block;
   position: relative;
   width: 20px;
   height: 20px;
@@ -2344,8 +2224,6 @@ e.g. Amazon has confirmation button inside of additional info */
   border: 2px solid #7a7a7a;
   background: #fff;
   margin-right: 1.25rem;
-  align-items: center;
-  justify-content: center;
 }
 
 .custom-radio input[type=radio] {
@@ -2359,9 +2237,10 @@ e.g. Amazon has confirmation button inside of additional info */
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  position: relative;
-  top: 0;
-  left: 0;
+  position: absolute;
+  left: .125rem;
+  top: .125rem;
+  transform: none;
 }
 
 .country-call-prefix {
@@ -2517,48 +2396,8 @@ select.form-control.orig-field.form-control-select.live {
   display: none;
 }
 
-/* Disable addresses for Amazonpay ongoing session */
-.amazonpay-ongoing-session :is(#thecheckout-address-invoice, #thecheckout-address-delivery) :is(.address-fields, .business-customer, .second-address) {
-  position: relative;
-}
-
-.amazonpay-ongoing-session :is(#thecheckout-address-delivery) :is(.address-fields, .business-customer):after,
-.amazonpay-ongoing-session :is(#thecheckout-address-invoice) :is(.second-address):after
-{
-  content: '';
-  display: block;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  opacity: 0;
-  title: 'disabled';
-  cursor: not-allowed;
-}
-
-.amazonpay-ongoing-session :is(#thecheckout-address-delivery) .address-fields .has-float-label :is(input, select)
-{
-  color: #888;
-  background: #fafafa!important;
-}
-
-.amazonpay-ongoing-session .customer-addresses {
-  display: none;
-}
-
-.amazonpay-ongoing-session .amazonpay-change-address {
-  display: block!important;
-}
-
-.amazonpay-change-address {
-  text-align: right;
-  margin-top: -20px;
-  margin-bottom: 20px;
-}
-
-  /* no-header class treatment */
-#checkout .checkout-block.no-header .inner-area {
+/* no-header class treatment */
+#module-thecheckout-order .checkout-block.no-header .inner-area {
   border-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -2619,7 +2458,7 @@ label.delivery-option-label {
 }
 */
 
-.paypal-plus .pp-info, div[data-pp-info]{
+.paypal-plus .pp-info {
     display: none;
 }
 
@@ -2664,671 +2503,4 @@ a#pppplus_reload {
 
 .logged-in #tc_save_account {
   display: none;
-}
-
-/* vivawallet has modal-backdrop with too high z-index, making problems for pop-up payment */
-.modal-backdrop.show {
-  z-index: 1000;
-}
-
-/* ps_checkout styling */
-#ps_checkout-loader {
-  display: none;
-}
-
-.js-payment-ps_checkout-card .alert-warning.accept-cgv {
-  display: none;
-}
-
-.ps_checkout-button {
-  text-align: center;
-}
-
-.ps_checkout-button button:disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-:not(.popup-payment-form) > div > #ps_checkout-hosted-fields-form {
-  display: none;
-}
-
-/* ps_checkout, card payment, confirmation button is sometimes hidden after window.ps_checkout.renderCheckout(); so we force its display */
-.ps_checkout-button[data-funding-source=card] button {
-  display: inline-block!important;
-}
-
-/* Fix paypal module's inactive button due to unrecognized T&C checkbox tick status */
-div[paypal-button-container],
-div[paypal-bnpl-button-container] {
-  pointer-events: all!important;
-  opacity: 1!important;
-}
-
-.remaining-amount-to-free-shipping-container {
-  padding: 10px;
-  background: antiquewhite;
-  text-align: center;
-  .remaining-amount {
-    font-weight: bold;
-  }
-  &.free {
-    display: none;
-  }
-}
-
-/* Paypal v5.7 fix */
-:not(.popup-payment-form) > .additional-information.paypal-hide-pp-info-and-button :is(.pp-info, [data-container-express-checkout], [data-container-bnpl]) {
-  display: none;
-}
-
-:not(.popup-payment-form) > .additional-information.paypal-hide-pp-info-and-button :is([id^=paypal-apm-], [paypal-acdc-wrapper]) {
-  display: none!important;
-}
-
-.popup-payment-form > .additional-information.paypal-hide-pp-info-and-button :is([id^=paypal-apm-], [paypal-acdc-form-button]) {
-  pointer-events: all!important;
-  opacity: 1!important;
-}
-
-#checkout .additional-information.paypal-hide-pp-info-and-button {
-  margin-top: 0;
-}
-
-.popup-payment-form > .additional-information .popup-notice {
-  display: none;
-}
-
-[paypal-acdc-wrapper] {
-  margin: 0 auto;
-}
-
-/* Paypal module v5.8.0, double logo fix */
-.payment-option span[paypal-mark-container] + span[paypal-mark-container] {
-  display: none!important;
-}
-
-#checkout .popup-payment-form > .additional-information {
-  margin: 0;
-}
-
-div#tc-container-mobile .form-group {
-  flex-basis: 100%!important;
-}
-
-// Checkout tabs
-
-#checkout-step-btn-container {
-  display: flex;
-
-  .checkout-step-btn {
-    position: relative;
-    height: calc(30px * 1.414);
-    flex-grow: 1;
-    line-height: 30px;
-    text-align: center;
-    color: #7a7a89;
-    cursor: pointer;
-    display: inline-block;
-    padding: 7px 15px;
-    background: #e6e6e6;
-
-    &:not(:first-child):before {
-      content: '';
-      display: inline-block;
-      border-width: 3px 3px 0 0;
-      border-style: solid;
-      border-color: white;
-      transform: rotate(45deg);
-      width: 30px;
-      height: 30px;
-      position: absolute;
-      top: 5px;
-      left: calc(-18px * 1.414);
-      box-sizing: content-box;
-    }
-  }
-}
-
-.checkout-step-1 .checkout-step-btn[data-step-id='1'],
-.checkout-step-2 .checkout-step-btn[data-step-id='2'],
-.checkout-step-3 .checkout-step-btn[data-step-id='3'],
-.checkout-step-4 .checkout-step-btn[data-step-id='4'] {
-  color: #26272d!important;
-}
-
-.prev-next-container {
-  text-align: right;
-
-  .step-back.continue-shopping {
-    display: none;
-  }
-
-  &.first-step {
-    .step-back.back {
-      display: none;
-    }
-    .step-back.continue-shopping {
-      display: block;
-    }
-  }
-
-  &.last-step {
-    text-align: left;
-    .step-continue {
-      display: none;
-    }
-  }
-}
-
-@media (max-width: 450px) {
-  #content .prev-next-container {
-    flex-direction: column-reverse;
-    align-items: baseline;
-
-    > button.step-back {
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-  }
-}
-
-button.step-continue {
-  font-size: 1.2em;
-  padding: 12px 20px;
-  margin: 0 30px 0 10px;
-}
-
-
-p.toast-title,
-p.toast-message {
-  color: white;
-}
-
-p.toast-title {
-  font-weight: bold;
-}
-
-@media (max-width: 767px) {
-  .checkout-step-btn {
-    font-size: 0.8em;
-  }
-}
-
-@media (max-width: 500px) {
-  div#checkout-step-btn-container {
-    display: none;
-  }
-}
-
-.cart-voucher>p>a.promo-code-button.collapsed {
-  border: 1px dashed #b1adad;
-  padding: 10px 20px;
-  background: #f5fff7;
-  display: inline-block;
-}
-
-.cart-voucher>p>a.promo-code-button {
-  display: none;
-}
-
-.block-promo {
-  form {
-    display: inline-block;
-  }
-  .promo-input-button {
-    display: flex;
-    height: 2.5em;
-
-    .promo-input {
-      margin: 0;
-      border-style: dashed;
-      border-right: 0;
-      height: auto;
-      flex-grow: 1;
-    }
-
-    .promo-input + button {
-      margin: 0;
-      flex-basis: 2em;
-    }
-  }
-}
-
-.remaining-amount-progress {
-  background: #eceaea;
-  border: 1px solid #a9a9a9;
-  padding: 1px;
-  margin-top: 5px;
-  .inside-bar {
-    height: 5px;
-    background: #6c9a61;
-  }
-}
-
-#expand_other_shipping_options, #expand_other_payment_options {
-  cursor: pointer;
-  text-align: center;
-  width: 100%;
-  margin-bottom: 1em;
-  // display: none;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  div {
-    width: 100%;
-  }
-}
-
-body:not(.collapse-shipping-methods) #expand_other_shipping_options,
-body:not(.collapse-payment-methods) #expand_other_payment_options {
-  display: none;
-}
-
-.expandOtherOptionsVisible() {
-  max-height: 60px;
-  opacity: 1;
-  transition: max-height 0.2s ease-in-out, opacity 0.6s ease-in-out;
-  transition-delay: 0.5s;
-}
-
-.rowVisible() {
-  max-height: 500px;
-  opacity: 1;
-  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
-
-.rowHidden() {
-  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  max-height: 0;
-  opacity: 0;
-  padding: 0;
-  border: 0;
-  overflow: hidden;
-}
-
-// Shipping methods collapse logic
-.collapse-shipping-methods {
-  .delivery-option-row {
-    .rowVisible();
-  }
-  .delivery-options-list.shipping-selected {
-    .delivery-option-row {
-      &:not(.selected) {
-        .rowHidden();
-      }
-    }
-    #expand_other_shipping_options {
-      .expandOtherOptionsVisible();
-    }
-  }
-}
-
-// Payment methods collapse logic
-.collapse-payment-methods {
-  .tc-main-title {
-    .rowVisible();
-  }
-  #checkout-payment-step.payment-selected {
-    .tc-main-title {
-      &:not(.selected) {
-        .rowHidden();
-      }
-    }
-    #expand_other_payment_options {
-      .expandOtherOptionsVisible();
-    }
-  }
-}
-
-@media (max-width: 767px) {
-  #content.card-block {
-    padding: 0px;
-  }
-  body#checkout .additional-information {
-    margin-left: 0;
-  }
-  .form-group, .shaim_gdpr_checkbox {
-    padding-left: 0;
-  }
-}
-
-@media (max-width: 576px) {
-  .payment-option label {
-    flex-wrap: wrap
-  }
-
-  body#checkout .condition-label label {
-    text-align: left;
-  }
-}
-
-.prev-next-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Styling fix for certain themes, where 'dots' appear in radio buttons */
-.checkout-block :is(.custom-radio input[type=radio], .custom-checkbox input[type=checkbox]) {
-  display: block;
-}
-
-.checkout-block .custom-radio input[type=radio]+span:before {
-  display: none;
-}
-
-/* Highlight voucher codes more */
-.cart-voucher .js-discount .code {
-  cursor: pointer;
-  border-bottom: 2px dashed #a7a7ba;
-}
-
-.cart-voucher .js-discount .code:hover {
-  background: #fcfce3;
-}
-
-.toastify.steps-toast {
-  position: fixed;
-  font-size: 1.2em;
-  z-index: 1000;
-  right: 50px;
-  padding: 20px 20px 20px 25px;
-  color: white;
-  background: red;
-  box-shadow: 0 0 15px 0px #979292;
-  .toast-close {
-    margin-left: 10px;
-    cursor: pointer;
-  }
-}
-
-div#vyhledejte_pobocku_baliknapostu,
-div#vyhledejte_pobocku_balikovna,
-div#vyhledejte_pobocku_dpdparcelshop {
-  flex-grow: 1;
-}
-
-.delivery-options :is(.row.delivery-option.chronopost, .row.delivery-option.dpdfrance) {
-  flex-wrap: wrap;
-  display: flex;
-  .shipping-radio {
-    flex-basis: 5%;
-  }
-  .delivery-option-label {
-    flex-basis: 80%;
-  }
-  #chronorelais_container .row {
-    flex-wrap: wrap;
-    display: flex;
-    & > div {
-      flex-grow: 1;
-      flex-basis: 20em;
-    }
-  }
-  input#relais_postcode {
-    padding-top: 2px;
-    height: 100%;
-    padding-bottom: 1px;
-  }
-}
-
-
-#chronorelais_dummy_container {
-    display: none;
-}
-
-/* Styling for login block, when it's moved to account area */
-.login-block-moved {
-  border: 1px solid #e1e1e6;
-  padding: 10px 0 5px;
-  border-radius: 5px;
-  margin-bottom: 15px;
-  background-color: #ffffff;
-}
-
-body#checkout .checkout-block .inner-area .login-block-moved .offer-login a {
-  border-radius: 10px;
-  padding: 10px 15px;
-  font-size: 18px;
-}
-
-/* fetchifyuk (formerly craftyclick) styling update */
-
-.fetchifyuk-enabled {
-  .form-group.postcode {
-    .field-label {
-      left: 0;
-    }
-
-    label {
-      display: flex;
-
-      input.form-control {
-        flex-grow: 1;
-      }
-    }
-  }
-  :is(.invoice_cp_result_class.select, .delivery_cp_result_class.select) {
-    .col-md-6 {
-      padding-bottom: 30px;
-      margin-top: -10px;
-      max-width: 100%;
-      width: 100%;
-      flex-grow: 1;
-    }
-    .form-control-label {
-      display: none;
-    }
-  }
-
-  #invoice_cp_result_display, #delivery_cp_result_display {
-    float: none!important;
-  }
-
-  #invoice_cp_button_id, #delivery_cp_button_id {
-    float: none!important;
-    height: 32px;
-    padding-top: 6px;
-    margin-left: -4px;
-    z-index: 1;
-    border-color: #17a2b8;
-  }
-}
-
-#tc-google-signin iframe {
-  margin: 0 auto!important;
-}
-
-/* stripe_official styles override */
-.checkout-block form {
-  min-width: 0;
-  box-shadow: none;
-  border-radius: 0;
-  padding: 0;
-}
-
-.sticky.wrapper {
-  position: sticky;
-  top: 0;
-}
-
-/* iframe popup for payment methods - by default, iframe popup-embed is not visible, with CSS class .iframe, payment-form shall not be visible */
-.popup-body {
-  iframe.popup-embed {
-    display: none;
-  }
-  .popup-payment-form, .popup-payment-button {
-    display: block;
-  }
-}
-.popup-payment-content.iframe {
-  width: 50em;
-  .popup-body {
-    padding: 0;
-  }
-  iframe.popup-embed {
-    width: 100%;
-    height: 30em;
-    display: block;
-    border: none;
-  }
-  .popup-payment-form, .popup-payment-button {
-    display: none;
-  }
-  // Specific height for certain payment methods
-  &[data-payment-module=ps_checkpayment] .popup-embed {
-    height: 18em;
-  }
-}
-
-// Add minus sign and change color of discount value in cart summary
-div#cart-subtotal-discount > .value:before {
-  content: '-';
-  padding-right: 2px;
-}
-div#cart-subtotal-discount > .value {
-  color: #dd0000;
-}
-
-// Display password field as required, if 'create account' checkbox is ticked
-div#create_account ~ .form-group.password .field-label:after {
-  content: '*';
-  color: #36b4d2;
-}
-
-[name=general_error] ~ .error-msg {
-  width: 100%;
-}
-
-// Paypal pay-later, fix the 'pay later' button visibility
-.popup_content[data-payment-module=paypal] .popup-payment-button {
-  display: flex!important;
-  justify-content: center;
-  #payment-confirmation {
-    display: none!important;
-  }
-  #paypal-buttons [paypal-bnpl-button-container] {
-    display: none!important;
-    &:last-child {
-      display: block!important;
-    }
-  }
-}
-
-/* GLS PakkeShop & Postnord map styling */
-.delivery-option > label {
-  max-width: 100%;
-  flex-wrap: wrap;
-  & .shipping_agents, & #map {
-    width: calc(100% + 40px) !important;
-    margin-left: -40px
-  }
-}
-
-/* mondialrelay slideDown() sometimes stops at smaller heights, so force it to be auto-height */
-.row.carrier-extra-content.mondialrelay {
-  height: auto!important;
-}
-
-.payment-option label {
-  width: 100%;
-}
-
-/* Logos on the right side in shipping/payment listing (config option) */
-body.logos-on-the-right {
-  & .payment-option label {
-    & .payment-call-to-action-and-logo {
-      flex-grow: 1;
-    }
-    & .payment-logo {
-      order: 1;
-    }
-  }
-
-  & .delivery-option-detail {
-    & .name-and-delay {
-      flex-grow: 1;
-      & .delivery-option-price {
-        display: block!important;
-      }
-    }
-    & .delivery-option-logo {
-      order: 1;
-    }
-    & .delivery-option-price {
-      display: none;
-    }
-  }
-}
-
-#checkout .popup-payment-form > .additional-information {
-  display: flex;
-  justify-content: center;
-}
-
-/* Payment form displayed when T&C checkbox was ticked, but we need to postpone that until popup */
-[data-payment-module=ps_checkout] > .js-payment-option-form {
-  display: none!important;
-}
-
-/* Warehouse theme, touchspin on quantity input box made inconvenient blink effect */
-.qty-box > .bootstrap-touchspin {
-  display: none;
-  & ~ a {
-    display: none;
-  }
-}
-
-#checkout .popup-payment-form > .przelewy24.additional-information {
-  flex-flow: column;
-}
-
-.cart-summary-line.vat-exempt {
-  text-align: center;
-  & > span.label {
-    color: green;
-  }
-}
-
-.summary-customization {
-  & > a {
-    font-size: 0.8em;
-  }
-  & > .customization-details {
-    display: none;
-    height: 0;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out, height 1.5s ease-in-out;
-  }
-  &.details-shown {
-    & > a {
-      display: none;
-    }
-    & > .customization-details {
-      display: block;
-      height: auto;
-      opacity: 1;
-    }
-  }
-  & .product-customization-line {
-    padding: 6px 0;
-    & > .customization-label {
-      font-size: 0.8em;
-    }
-  }
-}
-
-/* Hide stock quantity and quantity label by default when stock quantities are enabled in the cart summary */
-.qty-label {
-  & > .stock-quantity {
-    display: none;
-    padding: 0 2px 0 6px;
-    font-size: 0.9em;
-  }
-  & > .stock-quantity-label {
-    display: none;
-    font-size: 0.9em;
-  }
 }

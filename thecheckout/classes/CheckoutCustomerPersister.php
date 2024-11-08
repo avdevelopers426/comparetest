@@ -10,10 +10,6 @@
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-if (!defined('_PS_VERSION_')) {
-    exit;
-}
-
 use PrestaShop\PrestaShop\Core\Crypto\Hashing as Crypto;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -40,8 +36,7 @@ class CheckoutCustomerPersister
         $this->guest_allowed_for_registered = $guest_allowed_for_registered;
     }
 
-    public function isGuestCheckoutDisabledForRegistered()
-    {
+    public function isGuestCheckoutDisabledForRegistered() {
         return !$this->guest_allowed_for_registered;
     }
 
@@ -64,20 +59,9 @@ class CheckoutCustomerPersister
     {
         if ($customer->is_guest) {
             if ($customer->id != $this->context->customer->id) {
+
                 $this->errors['email'][] = $this->translator->trans(
                     'There seems to be an issue with your account, please contact support',
-                    array(),
-                    'Shop.Notifications.Error'
-                );
-                return false;
-            }
-        }
-
-        if ($customer->is_guest && ($this->isGuestCheckoutDisabledForRegistered() || $clearTextPassword)) {
-            // guest cannot update their email to that of an existing real customer
-            if (Customer::customerExists($customer->email, false, true)) {
-                $this->errors['email'][] = $this->translator->trans(
-                    'An account was already registered with this email address',
                     array(),
                     'Shop.Notifications.Error'
                 );
@@ -88,6 +72,7 @@ class CheckoutCustomerPersister
         $guest_to_customer = false;
 
         if ($clearTextPassword && $customer->is_guest) {
+
             $guestGroupId = Configuration::get('PS_GUEST_GROUP');
             $customerGroupId = Configuration::get('PS_CUSTOMER_GROUP');
             $existingGroups = $customer->getGroups();
@@ -96,10 +81,10 @@ class CheckoutCustomerPersister
                 $newGroups = array_diff($existingGroups, [$guestGroupId]);
                 $newGroups = array_merge($newGroups, [$customerGroupId]);
                 $customer->updateGroup($newGroups);
-                if ($customer->id_default_group == $guestGroupId) {
+                if ($customer->id_default_group == $guestGroupId)
                     $customer->id_default_group = $customerGroupId;
-                }
             }
+
 
             $guest_to_customer  = true;
             $customer->is_guest = false;
@@ -107,6 +92,18 @@ class CheckoutCustomerPersister
                 $clearTextPassword,
                 _COOKIE_KEY_
             );
+        }
+
+        if (($this->isGuestCheckoutDisabledForRegistered() && $customer->is_guest) || $guest_to_customer) {
+            // guest cannot update their email to that of an existing real customer
+            if (Customer::customerExists($customer->email, false, true)) {
+                $this->errors['email'][] = $this->translator->trans(
+                    'An account was already registered with this email address',
+                    array(),
+                    'Shop.Notifications.Error'
+                );
+                return false;
+            }
         }
 
         $ok = $customer->save();
@@ -154,11 +151,8 @@ class CheckoutCustomerPersister
         // Force email check when:
         // a/ $customer is not guest = !$customer->is_guest
         // b/ $customer is guest and guest_allowed_for_registered is false = !$this->guest_allowed_for_registered (guest condition is then implicit)
-        if (($this->isGuestCheckoutDisabledForRegistered() || !$customer->is_guest) && Customer::customerExists(
-            $customer->email,
-            false,
-            true
-        )) {
+        if (($this->isGuestCheckoutDisabledForRegistered() || !$customer->is_guest) && Customer::customerExists($customer->email,
+                false, true)) {
             $this->errors['email'][] = $this->translator->trans(
                 'An account was already registered with this email address',
                 array(),
@@ -196,9 +190,9 @@ class CheckoutCustomerPersister
         $this->context->cookie->is_guest           = $customer->isGuest();
         $this->context->cart->secure_key           = $customer->secure_key;
 
-        if (method_exists($this->context->cookie, 'registerSession')) {
+        if (method_exists($this->context->cookie,'registerSession')) {
             $this->context->cookie->registerSession(new CustomerSession());
-        }
+        } 
     }
 
     private function _sendConfirmationMail(
@@ -225,4 +219,6 @@ class CheckoutCustomerPersister
             $customer->firstname . ' ' . $customer->lastname
         );
     }
+
+
 }

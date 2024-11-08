@@ -31,8 +31,7 @@
   display: none;
 }
 
-.checkout-block.main-block,
-#thecheckout-newsletter, #thecheckout-psgdpr, #thecheckout-data-privacy, #thecheckout-confirm, #thecheckout-required-checkbox-1, #thecheckout-required-checkbox-2 {
+.checkout-block.main-block {
   padding: 15px 7px;
 }
 
@@ -193,6 +192,7 @@ span.non-material-icon.delete-from-cart {
   padding-top: 0;
   display: flex;
   align-items: flex-start;
+  width: 100%;
 }
 
 .payment-options .payment-option {
@@ -244,20 +244,9 @@ span.non-material-icon.delete-from-cart {
   filter: brightness(0);
 }
 
-body#checkout span.custom-checkbox {
-  & > label, & span.label {
-    line-height: 1.05em;
-  }
-}
-
-div#checkout-step-btn-container {
-  margin-bottom: 5px;
-}
-
 .country-call-prefix {
   font-size: 1.2em;
   width: 49px;
-  height: 47px;
 }
 
 /* einvoicing prestalia */
@@ -277,11 +266,6 @@ label.col-md-3.form-control-label {
     padding: 0;
     margin: 0;
     max-width: 100%;
-}
-
-.form-fields .form-group {
-  padding-left: 3px;
-  padding-right: 3px;
 }
 
 .col-md-3.form-control-comment {
